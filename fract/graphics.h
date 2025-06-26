@@ -13,4 +13,6 @@ EFI_STATUS init_graphics();
 uint32_t get_pixel(uint32_t x, uint32_t y);
 int set_pixel(uint32_t x, uint32_t y, uint32_t val);
 
+EFI_STATUS fill_framebuffer(uint32_t val);
+
 #endif

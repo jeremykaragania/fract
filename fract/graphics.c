@@ -50,3 +50,12 @@ int set_pixel(uint32_t x, uint32_t y, uint32_t val) {
 
   return 0;
 }
+
+/*
+ * fill_framebuffer fills the framebuffer to the value `val`.
+ */
+EFI_STATUS fill_framebuffer(uint32_t val) {
+  EFI_GRAPHICS_OUTPUT_BLT_PIXEL pixel = *(EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)&val;
+
+  return gop->Blt(gop, &pixel, EfiBltVideoFill, 0, 0, 0, 0, gop_info->HorizontalResolution, gop_info->VerticalResolution, 0);
+}
