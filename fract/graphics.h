@@ -7,6 +7,8 @@
 extern EFI_GRAPHICS_OUTPUT_PROTOCOL* gop;
 extern EFI_GRAPHICS_OUTPUT_MODE_INFORMATION* gop_info;
 extern UINTN gop_info_size;
+extern UINTN screen_width;
+extern UINTN screen_height;
 
 EFI_STATUS init_graphics();
 

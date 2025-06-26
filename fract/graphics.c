@@ -3,6 +3,8 @@
 EFI_GRAPHICS_OUTPUT_PROTOCOL* gop;
 EFI_GRAPHICS_OUTPUT_MODE_INFORMATION* gop_info;
 UINTN gop_info_size;
+UINTN screen_width;
+UINTN screen_height;
 
 /*
  * init_graphics initializes the Graphics Output Protocol (GOP), initializing
@@ -25,6 +27,9 @@ EFI_STATUS init_graphics() {
     return status;
   }
 
+  screen_width = gop_info->HorizontalResolution;
+  screen_height = gop_info->VerticalResolution;
+
   return EFI_SUCCESS;
 }
 
@@ -33,7 +38,7 @@ EFI_STATUS init_graphics() {
  * coordinate, `x` and y coordinate, `y`.
  */
 uint32_t get_pixel(uint32_t x, uint32_t y) {
-  return ((uint32_t*)gop->Mode->FrameBufferBase)[y * gop_info->HorizontalResolution + x];
+  return ((uint32_t*)gop->Mode->FrameBufferBase)[y * screen_width + x];
 }
 
 /*
@@ -42,11 +47,11 @@ uint32_t get_pixel(uint32_t x, uint32_t y) {
  * bounds, then nothing is set. -1 is returned on failure and 0 on success.
  */
 int set_pixel(uint32_t x, uint32_t y, uint32_t val) {
-  if (x >= gop_info->HorizontalResolution || y >= gop_info->HorizontalResolution) {
+  if (x >= screen_width || y >= screen_height) {
     return -1;
   }
 
-  ((uint32_t*)gop->Mode->FrameBufferBase)[y * gop_info->HorizontalResolution + x] = val;
+  ((uint32_t*)gop->Mode->FrameBufferBase)[y * screen_width + x] = val;
 
   return 0;
 }
@@ -57,5 +62,5 @@ int set_pixel(uint32_t x, uint32_t y, uint32_t val) {
 EFI_STATUS fill_framebuffer(uint32_t val) {
   EFI_GRAPHICS_OUTPUT_BLT_PIXEL pixel = *(EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)&val;
 
-  return gop->Blt(gop, &pixel, EfiBltVideoFill, 0, 0, 0, 0, gop_info->HorizontalResolution, gop_info->VerticalResolution, 0);
+  return gop->Blt(gop, &pixel, EfiBltVideoFill, 0, 0, 0, 0, screen_width, screen_height, 0);
 }
