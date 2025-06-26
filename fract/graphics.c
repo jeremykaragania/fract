@@ -37,8 +37,8 @@ EFI_STATUS init_graphics() {
  * get_pixel returns a copy of the pixel in the framebuffer from its x
  * coordinate, `x` and y coordinate, `y`.
  */
-uint32_t get_pixel(uint32_t x, uint32_t y) {
-  return ((uint32_t*)gop->Mode->FrameBufferBase)[y * screen_width + x];
+uint32_t get_pixel(struct point p) {
+  return ((uint32_t*)gop->Mode->FrameBufferBase)[p.y * screen_width + p.x];
 }
 
 /*
@@ -46,12 +46,12 @@ uint32_t get_pixel(uint32_t x, uint32_t y) {
  * coordinate, `x` and y coordinate, `y`. If either coordinate is out of
  * bounds, then nothing is set. -1 is returned on failure and 0 on success.
  */
-int set_pixel(uint32_t x, uint32_t y, uint32_t val) {
-  if (x >= screen_width || y >= screen_height) {
+int set_pixel(struct point p, uint32_t val) {
+  if (p.x >= screen_width || p.y >= screen_height) {
     return -1;
   }
 
-  ((uint32_t*)gop->Mode->FrameBufferBase)[y * screen_width + x] = val;
+  ((uint32_t*)gop->Mode->FrameBufferBase)[p.y * screen_width + p.x] = val;
 
   return 0;
 }
