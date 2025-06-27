@@ -31,8 +31,8 @@ struct plane_point screen_to_plane(struct screen_point p) {
   float dx = plane_max_x - plane_min_x;
   float dy = plane_max_y - plane_min_y;
 
-  ret.x = (p.x / (screen_width - 1)) * dx + plane_min_x;
-  ret.y = (p.y / (screen_height - 1)) * dy + plane_min_y;
+  ret.x = (p.x / (screen_width - 1.0f)) * dx + plane_min_x;
+  ret.y = (p.y / (screen_height - 1.0f)) * dy + plane_min_y;
 
   return ret;
 }
