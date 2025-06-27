@@ -23,6 +23,21 @@ struct screen_point plane_to_screen(struct plane_point p) {
 }
 
 /*
+ * screen_to_plane transforms the screen point `p` into a plane point.
+ */
+struct plane_point screen_to_plane(struct screen_point p) {
+  struct plane_point ret;
+
+  float dx = plane_max_x - plane_min_x;
+  float dy = plane_max_y - plane_min_y;
+
+  ret.x = (p.x / (screen_width - 1)) * dx + plane_min_x;
+  ret.y = (p.y / (screen_height - 1)) * dy + plane_min_y;
+
+  return ret;
+}
+
+/*
  * set_plane_x sets the x bounds of the plane. It returns 0 on success and -1
  * on failure.
  */

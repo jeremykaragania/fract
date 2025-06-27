@@ -15,6 +15,7 @@ struct plane_point {
 };
 
 struct screen_point plane_to_screen(struct plane_point p);
+struct plane_point screen_to_plane(struct screen_point p);
 
 int set_plane_x(float min, float max);
 int set_plane_y(float min, float max);
