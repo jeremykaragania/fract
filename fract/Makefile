@@ -1,6 +1,6 @@
 CC = x86_64-w64-mingw32-gcc
 CFLAGS = -I. -Wl,-dll -shared -Wl,--subsystem,10 -nostdlib -ffreestanding -e efi_main -o BOOTX64.EFI
-CFILES = graphics.c main.c plane.c system.c
+CFILES = graphics.c main.c mandelbrot.c plane.c system.c
 
 fract.img: BOOTX64.EFI
 	dd if=/dev/zero of=fract.img bs=1k count=1440
