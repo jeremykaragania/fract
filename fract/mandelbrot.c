@@ -22,13 +22,17 @@ void draw_mandelbrot() {
         z.x = z.x * z.x - z.y * z.y + pp.x;
         z.y = 2 * z.x * z.y + pp.y;
         if (z.x * z.x + z.y * z.y >= 4) {
-          uint8_t p = (255.0f * ((float)i / (float)max_iterations));
-          set_pixel(sp, p & (p >> 8) & (p >> 16));
+          uint8_t r = i * 12 % 256;
+          uint8_t g = i * 8 % 256;
+          uint8_t b = i * 4 % 256;
+          uint32_t p = b | (g << 8) | (r << 16);
+
+          set_pixel(sp, p);
           break;
         }
 
         if (i == max_iterations - 1) {
-          set_pixel(sp, 0xffffff);
+          set_pixel(sp, 0);
           break;
         }
       }
