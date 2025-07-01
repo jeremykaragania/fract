@@ -4,7 +4,7 @@ void draw_mandelbrot() {
   set_plane_x(-2, 0.47);
   set_plane_y(-1.12, 1.12);
 
-  size_t max_iterations = 1000;
+  size_t max_iterations = 8;
   struct plane_point pp;
   struct screen_point sp;
   struct plane_point z;
